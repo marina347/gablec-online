@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout" th:with="title='Hello, template'">
+<head>
+    <title th:text="'Restaurant management'"></title>
+</head>
+
+<th:block layout:fragment="heading">
+    <h3 class="display-3"  style="margin-left:7%;">Restaurants</h3>
+</th:block>
+<th:block layout:fragment="content">
+    <div align="center">
+
+        <h3>
+
+        </h3>
+        <table id="customers">
+
+            <th>Name</th>
+            <th>Address</th>
+            <th>Phone </th>
+            <th>Order time</th>
+            <th>Action</th>
+
+            <div th:each="restaurant, itr_rest:${restaurants}">
+                <tr>
+
+                    <td th:text="${restaurant.name}" ></td>
+                    <td th:text="${restaurant.address}" ></td>
+                    <td>
+                        <span th:each="phone, itrStat: ${restaurant.phoneList}">
+                            <span th:text="${phone.number}"></span>
+                            <br th:if="!${itrStat.last}"/>
+                        </span>
+                    </td>
+                    <td th:text="${restaurant.orderTime}"></td>
+                    <td><a th:href="'edit-restaurant/'+${restaurant.id}">Edit</a>
+                        </td>
+                </tr>
+            </div>
+        </table>
+</div>
+</th:block>
+</html>

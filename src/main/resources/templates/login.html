@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout" th:with="title='Hello, template'">
+<head>
+    <title th:text="'Login'"></title>
+</head>
+
+<th:block layout:fragment="content">
+    <div style="margin-top: 3em;" class="center-div">
+        <h3>Sign into Gablec Online</h3>
+    <form id="login-form" method="POST" th:action="@{/login}">
+        <input style="margin-top: 1.5em; text-align:center;"  type="text" name="username" placeholder="username"/> <br/>
+        <input style="margin-top: 1.5em; text-align:center;"  type="password" name="password" placeholder="password"/>
+        <a th:href="@{/registration}">Don't have an account yet?</a><br/><br/>
+        <input class="log-reg-btn btn btn-warning" style="background-color: #F39C12;" th:value="'Log In'" type="submit"/>
+    </form>
+    <p th:text="${body}"></p>
+    </div>
+</th:block>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout" th:with="title='Hello, template'">
+<head>
+    <title th:text="'Lunch wallets'"></title>
+    <script type="text/javascript" th:src="@{/js/admin/lunch-wallets.js}"></script>
+</head>
+
+<th:block layout:fragment="heading">
+    <h3 class="display-4">Wallets Management</h3>
+</th:block>
+<th:block layout:fragment="content">
+    <div style=""  th:each="user, itrStat: ${users}">
+        <div style="margin-left: 10%;font-size: 22px;" th:id="${user.id}">
+            <span th:text="${user.name}"></span>
+            <span th:text="${user.surname}"></span><br/>
+            <span>Current state: </span>
+            <span style="font-weight: bold;" th:text="${user.lunchWallet}+ ' HRK'" ></span><br/>
+            <input type="text" style=" width:20em;" th:name="wallet" th:id="money" />
+            <button style="margin-left:1em;font-size:18px; margin-bottom: 0.3em;" type="button" class="btn btn-warning">Add money</button>
+        </div>
+        <hr/>
+    </div>
+</th:block>
+
+</html>

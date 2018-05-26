@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout" th:with="title='Hello, template'"
+>
+<head>
+    <style>
+        .card {
+            /* Add shadows to create the "card" effect */
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+        }
+
+        /* On mouse-over, add a deeper shadow */
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+
+    </style>
+    <script type="text/javascript" th:src="@{/js/home.js}"></script>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/order.css}"/>
+
+    <title>Order gablec</title>
+    <script th:inline="javascript">
+        let hh="hh";
+        /*<![CDATA[*/
+        let cartFoodList = [[${cartFoodList}]];
+        /*]]>*/
+        //console.log(JSON.parse(cartFoodList));
+        cartFoodList = JSON.parse(cartFoodList)
+    </script>
+</head>
+
+
+
+<th:block layout:fragment="heading">
+    <h3 class="display-3">Choose your gablec!</h3>
+</th:block>
+<th:block layout:fragment="content">
+        <label for="filter_restaurants">Search </label>
+        <input id="filter_restaurants" type="text"/>
+
+        <div th:attr="data-restaurant-name=${restaurant.name}" id="'restaurant_'+${restaurant.name}" class="restaurant-offer-container card" th:each="restaurant, itr_rest:${restaurants}">
+            <div class="toggle restaurant-heading"  th:classappend="${itr_rest.index==0} ? restaurant-card-expanded" th:attr="data-toggle='menu_'+${restaurant.id }">
+
+                <div style="width:49%;display:inline-block; vertical-align:top;">
+                    <p data-toggle="tooltip" th:title="${restaurant.phoneList[0].number}" class="box-inline restaurant-name" th:text="${restaurant.name}"></p>
+                </div>
+                <div style="text-align:right;width:49%;display:inline-block; vertical-align:top; padding-top:1em;">
+                    <img style="width:0.9em;height:0.9em;margin-bottom: 24px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ce/Feedbin-Icon-clock.svg/255px-Feedbin-Icon-clock.svg.png"/>
+                    <p class="box-inline"  style="font-size:20px" th:text="${#strings.substring(restaurant.orderTime,0,5)}   "></p>
+                </div>
+
+                <!--<div th:each="phoneList, itrStat:${restaurant.phoneList}">-->
+                    <!--<p th:text="${phoneList.number}"></p>-->
+                <!--</div>-->
+                <div>
+                    <p style="margin-left:18px;" class="box-inline" th:text="${restaurant.address}"></p>:
+
+                    <p th:text="${phone.number}" class="box-inline" th:each="phone, itrStat:${restaurant.phoneList}"></p>
+                </div>
+            </div>
+            <div th:id="'menu_'+${restaurant.id}"
+                 th:class="'categories-container '"
+                 th:classappend="${itr_rest.index!=0} ? collapse">
+                <hr/>
+                <div th:each="category, itr_cat:${categories}">
+                    <div th:attr="data-toggle='menu_'+${restaurant.id}+'_category_'+${category.id}"
+                         class="toggle restaurant-category ">
+                        <span class="restaurant-category-name" style="font-weight: bold"
+                              th:text="${category.name}"></span>
+                    </div>
+                    <div th:id="'menu_'+${restaurant.id}+'_category_'+${category.id}"
+                         th:class="'category-articles'"
+                         th:classappend="${itr_cat.index!=0} ? collapse">
+                        <div  th:id="${article.id}" th:class="category-article" th:each="article, itrStat: ${restaurant.foodList}"
+                             th:if="${article.category.id ==category.id and (article.dailyMenu == null or article.dailyMenu.id == currentDay.id) }">
+                            <div style="font-size:18px;" class="article-item">
+                                <span th:text="${article.name}"  class="content article-data"></span>
+                                <span th:text="' '" class="dots"></span>
+                                <span th:attr="data-price=${article.price}" class="article-price" th:text="${#numbers.formatDecimal(article.price, 0, 'COMMA', 2, 'COMMA')}"></span>
+                                <span th:text="'&nbsp; HRK'"></span>
+                                <br/>
+
+                                <hr/>
+                                <br/>
+                            </div>
+                            <div class="quantity-container">
+                                <span class="text-not-selectable button-quantity button-quantity-minus" th:text="'-'"></span>
+                                <span class="article-quantity" th:text="'1'"></span>
+                                <span class="text-not-selectable button-quantity button-quantity-plus" th:text="'+'"></span>
+                            </div>
+                            <span style="font-size:12px; margin-left:15px;" th:text="${article.description}+'&nbsp;'" class="content"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+</th:block>
+<th:block layout:fragment="fixed-content">
+
+    <div class="checkout-floating-data">
+        <div class="upper-container-expander overlayContainer">
+            <span class="upper-container-expander-arrow upper-arrow" id="upper-container-expander-arrow"></span>
+            <!--&#65087;-->
+            <div id="upper-container-expander"  class="toggle overlay"  data-toggle="upper-container"></div>
+        </div>
+        <div style="padding-top:1em;padding-left:1em;" id="upper-container" class="upper-container collapse">
+            <div class="inline-bl vert-top order-summary"  id="summary">
+                <h4>Summary:</h4><br/>
+                <div  style="padding: 0em 2em 2em 2em; font-size:20px;" id="summary-content">
+                </div>
+            </div>
+            <div style="padding-top:0.2em;padding-left:1em;"  class="inline-bl vert-top order-proposition" id="proposition">
+                <h4>Propositions:</h4>
+                <div style="padding:1.5em;" id="props-content">
+                    <div style="margin-bottom:0.15em;font-size:16px; padding-left:10%;" th:each="prop, itr_rest:${propositions}">
+
+                        <div th:id="'prop_'+${prop.id}" style="min-width:15em; font-size:20px; text-align:left;"  class="btn btn-primary proposition">
+                            <span style="font-size:18px; border-right:2px solid white; margin-right:0.5em; padding-right:0.5em; padding-left:0.2em;" th:text="'+'"></span>
+                            <span style="font-size:16px;" th:text="${prop.name}"></span>
+                            <span style="font-size:13px;" th:text="${#numbers.formatDecimal(prop.price, 0, 'COMMA', 2, 'COMMA')}+' HRK'"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding-top:0.8em; padding-bottom: 0.5em;" id="lower-container" class="lower-container">
+            <div class="inline-bl order-sum relative-bottom"   id="sum">
+                <span>
+                    Ukupno
+                </span>
+                <span id="sum_value">
+                    0
+                </span>
+                <!--<span id="sum_currency">HRK</span>-->
+                <span th:text="' / '+${#numbers.formatDecimal(user.lunchWallet, 0, 'COMMA', 2, 'COMMA')}+' HRK'"></span>
+            </div>
+
+            <div class="inline-bl checkout-button-container relative-bottom" id="checkout-button-container">
+                    <a  style="padding:0.55em;" class="btn-lg btn-warning button" onclick="checkout()" role="button">Proceed to checkout</a>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

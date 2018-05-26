@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout" th:with="title='Hello, template'">
+<head>
+    <title th:text="'Checkout'"></title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/checkout.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/order.css}"/>
+    <script type="text/javascript" th:src="@{/js/checkout.js}"></script>
+
+</head>
+
+<th:block layout:fragment="heading">
+    <h3 style="display:inline-block;" class="display-4">Checkout</h3> <span th:text="' / '+${#numbers.formatDecimal(user.lunchWallet, 0, 'COMMA', 2, 'COMMA')}+' HRK'"></span>
+</th:block>
+<th:block layout:fragment="content">
+    <div th:each="cartItem, itr_rest:${cartItems}">
+        <div class="category-article">
+            <div style="font-size:18px;" class="article-item">
+                <span data-toggle="tooltip" th:title="${cartItem.food.restaurant.name}" th:text="${cartItem.food.name}+' x'+${cartItem.count}"  class="content article-data"></span>
+                <span th:text="' '" class="dots"></span>
+                <span th:attr="data-price=${cartItem.food.price}" class="article-price" th:text="${#numbers.formatDecimal(cartItem.count*cartItem.food.price, 0, 'COMMA', 2, 'COMMA')}"></span>
+                <span th:text="'&nbsp; HRK'"></span>
+                <br/>
+
+                <hr/>
+                <br/>
+            </div>
+            <span style="margin-left:15px; font-size:12px;" th:text="${cartItem.food.description}+'&nbsp;'" class="content"></span>
+        </div>
+
+    </div>
+    <hr/>
+    <div style="text-align:right; margin-right:5em; font-size:1.4em;">
+        <span th:text="'Total: '"></span>
+        <span th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT')}"></span>
+        <span th:text="' HRK'"></span>
+        <button style="margin-left:1em;" th:text="'Checkout'" type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#myModal"></button>
+
+    </div>
+
+
+
+    <div id="myModal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to place
+                        <span style="font-weight: bold" th:text="${#numbers.formatDecimal(total, 0, 'COMMA', 2, 'POINT')}+' HRK'" id="totalAmount">
+                        </span>
+                        order
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button id="confirm_order" type="button" class="btn btn-primary">Confirm</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

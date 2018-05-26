@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout" th:with="title='Hello, template'">
+<head>
+    <title th:text="'Office'"></title>
+    <script type="text/javascript" th:src="@{/js/office.js}"></script>
+
+</head>
+
+<th:block layout:fragment="heading">
+    <h3 class="display-4">Choose your office</h3>
+</th:block>
+<th:block layout:fragment="content">
+    <div class="offices-container">
+        <div class="office-display" th:id="${office.id}" th:each="office, itrStat: ${offices}">
+            <h3 th:text="${office.name}"></h3>
+            <div class="div-img" th:style="'background-image:url(\''+@{/img/}+${office.imageName}+'\');'"></div>
+            <!--<img  th:src="@{/img/}+${office.imageName}"/>-->
+        </div>
+    </div>
+</th:block>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout" th:with="title='Hello, template'">
+<head>
+    <title th:text="'Today orders'"></title>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/order.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/today-orders.css}"/>
+    <script type="text/javascript" th:src="@{/js/admin/orders.js}"></script>
+</head>
+
+<th:block layout:fragment="heading">
+    <h3 class="display-4">Todays Orders</h3>
+</th:block>
+<th:block layout:fragment="content">
+    <div th:each="restaurantOrder, itrStat:${ordersByRestaurant}">
+        <h2 th:text="${restaurantOrder.restaurant.name}"></h2>
+
+        <p></p>
+        <div style="margin-left:2em; margin-top:1em;" class="restaurant-order-details-container">
+            <div th:each="article, itrStat: ${restaurantOrder.foodList}">
+                <div class="article-item">
+                    <span th:text="${article.food.name + ' x' + article.count} "  class="content article-data"></span>
+                    <span th:text="' '" class="dots"></span>
+                    <span th:attr="data-price=${article.food.price}" class="article-price" th:text="${#numbers.formatDecimal(article.food.price*article.count, 0, 'COMMA', 2, 'COMMA')}"></span>
+                    <span th:text="' &nbsp;&nbsp;HRK'"></span>
+                    <br/>
+
+                    <hr/>
+                    <br/>
+                </div>
+            </div>
+            <p></p>
+            <div style="text-align:right; margin-right:1em;"   th:id="${restaurantOrder.restaurant.id}">
+                <!--<div th:each="phone, itrStat: ${restaurantOrder.restaurant.phoneList}" th:if="${phone.startsWith09}">-->
+                <button  th:disabled="${restaurantOrder.ordered}" th:text="'Send SMS'" class="SMS btn btn-warning"></button>
+                <!--</div>-->
+                <button th:disabled="${restaurantOrder.ordered}" th:text="'Order confirmed'" class="confirmed btn btn-warning"></button>
+                <button style="margin-right:50%;" th:disabled="${restaurantOrder.delivered}" th:text="'Order arrived'" class="arrived btn btn-warning"></button>
+                <h4 style="display:inline-block; " class="restaurant-order-price">Total <span th:text="${#numbers.formatDecimal(restaurantOrder.total, 0, 'COMMA', 2, 'COMMA')} "></span> HRK</h4>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</th:block>
+</html>

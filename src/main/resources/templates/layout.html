@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta charset="UTF-8"/>
+    <!--<title th:text="Order gablec"></title>-->
+    <!--<meta name="_csrf" th:content="${_csrf.token}"/>-->
+    <!--<meta name="_csrf_header" th:content="${_csrf.headerName}"/>-->
+    <link rel="icon" type="image/png"
+          th:href="@{/img/food.png}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.css}" />
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/main.css}" />
+    <script type="text/javascript" th:src="@{/js/jquery.js}" ></script>
+    <link rel="manifest" href="manifest.sample.json"/>
+    <script type="text/javascript" th:src="@{/js/popper.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/bootstrap.js}" ></script>
+    <script type="text/javascript" th:src="@{/js/config.sample.js}"></script>
+    <!--<script type="text/javascript" th:src="@{/js/demo.js}"></script>-->
+    <script sec:authorize="isAuthenticated()" type="text/javascript" th:src="@{/js/main.js}"></script>
+
+</head>
+
+<body style="height:100%">
+<div style="
+    position:relative; height:5.5em;" >
+    <div style="display:inline-block; width:45%; padding:1.5em 1.5em 0em 1.5em; position:absolute; bottom:0; left:0; ">
+        <h1 style="color: gray">Gablec Online</h1>
+    </div>
+    <div style=" display:inline-block; width:45%; text-align:right; padding:1.5em 2.5em 1.3em 1.5em; position:absolute; bottom:0; right:0; ">
+        <div style="color: black; font-family:'Segoe UI',Arial,sans-serif;     letter-spacing: 4px;">THE WORLD'S GREATEST GABLEC ORDERING SITE </div>
+    </div>
+
+</div>
+<nav style="padding:0px;" class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <!--<h2 style="color: white">Gablec Online</h2>-->
+    <!--<h2 style="border-right: 1px solid white; color: white">&nbsp;&nbsp;</h2>-->
+
+    <!--<a class="navbar-brand" href="#">Navbar</a>-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" style="">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div style="padding-left: 1em;"  class="collapse navbar-collapse main-dark-color">
+
+        <ul class="navbar-nav mr-auto  main-dark-color">
+<!--
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="!isAuthenticated()" th:text="Login" th:href="@{/login}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="!isAuthenticated()" th:text="Register" th:href="@{/registration}"></a>
+            </li>-->
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="isAuthenticated()" th:text="Logout" th:href="@{/logout}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasRole('ROLE_CUSTOMER')" th:text="Order" th:href="@{/order}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasRole('ROLE_CUSTOMER')" th:text="'My Orders'" th:href="@{/history}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasRole('ROLE_CUSTOMER')" th:text="'My Lunch Wallet'" th:href="@{/borrow-money}"></a>
+            </li>
+
+            <span sec:authorize="hasRole('ROLE_ADMIN')"  style="border-right: 1px solid white; color: white">&nbsp;</span>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:text="'Todays Orders'" th:href="@{/admin/orders}"></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:text="'Restaurants Management'" th:href="@{/admin/view-restaurants}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:text="'Office Requests'" th:href="@{/admin/office-requests}"></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="hasRole('ROLE_ADMIN')" th:text="'Wallets'" th:href="@{/admin/lunch-wallets}"></a>
+            </li>
+
+
+        </ul>
+        <form style="padding-right:1em;" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" placeholder="Search" type="text"/>
+            <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+
+
+
+<div class="col-md-12 jumbotron" style="width:95%; margin-left: 2em; padding: 3rem 2rem; margin-right: 2em; min-height:100%; position:absolute; ">
+    <div class="col-md-12">
+        <th:block layout:fragment="heading"/>
+    </div>
+
+    <p class="lead"></p>
+    <hr class="my-4"/>
+    <div  style="width:95%; margin-left:4%;">
+        <th:block layout:fragment="content"/>
+    </div>
+</div>
+
+<div>
+    <th:block layout:fragment="fixed-content"/>
+</div>
+
+</body>
+
+</html>

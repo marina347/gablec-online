@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout" th:with="title='Hello, template'">
+<head>
+    <title th:text="'Order history'"></title>
+
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/main.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/order.css}"/>
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/history.css}"/>
+</head>
+
+<th:block layout:fragment="heading">
+    <h3 class="display-4">Orders</h3>
+</th:block>
+<th:block layout:fragment="content">
+    <div id="history-container">
+        <div th:classappend="${#calendars.format(#calendars.createNow(), 'yyyy-MM-dd') == #calendars.format(order.orderDate, 'yyyy-MM-dd')?'today-order':''}" th:each="order, itrStat: ${orders}" th:if="${not #lists.isEmpty(order.orderItemList)}">
+            <h2 th:text="${order.orderDate}"></h2>
+            <div class="order-details-container">
+                <div th:each="article, itrStat: ${order.orderItemList}">
+                    <div style="font-size:18px;" class="article-item">
+                        <span data-toggle="tooltip" th:title="${article.food.restaurant.name}" th:text="${article.food.name}+' x'+${article.count}"  class="content article-data"></span>
+                        <span th:text="' '" class="dots"></span>
+                        <span th:attr="data-price=${article.food.price}" class="article-price" th:text="${#numbers.formatDecimal(article.food.price*article.count, 0, 'COMMA', 2, 'COMMA')}"></span>
+                        <span th:text="' &nbsp;&nbsp;HRK'"></span>
+                        <br/>
+
+                        <hr/>
+                        <br/>
+                    </div>
+                </div>
+                <h4 class="history-order-price">Total <span th:text="${#numbers.formatDecimal(order.total, 0, 'COMMA', 2, 'COMMA')} "></span> HRK</h4>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
+            console.log("yeah");
+        });
+    </script>
+</th:block>
+</html>

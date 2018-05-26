@@ -1,0 +1,19 @@
+#history-container
+{    width: 85%;
+    margin-left: 4%;
+}
+
+.order-details-container{
+    margin-left:5%;
+}
+
+.history-order-price{
+    text-align:right;
+}
+
+.today-order{
+    padding:1em;
+    opacity: 0.7;
+    background-color: #5a656f;
+    color:white;
+}

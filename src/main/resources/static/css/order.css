@@ -1,0 +1,294 @@
+
+.restaurant-offer-container{
+    margin-bottom:0.5em;
+}
+
+.restaurant-heading:hover{
+    opacity:0.9;
+    color:white;
+}
+
+.restaurant-card-expanded
+{
+    color:white;
+
+}
+
+.restaurant-heading
+{
+    cursor: pointer;
+    padding:0.7em;
+    color:white;
+    background-color: #2f2f2f;
+
+}
+
+.restaurant-name{
+    font-size:40px;
+}
+
+.categories-container
+{
+    padding:0.7em;
+    margin-left:1em;
+}
+
+
+.restaurant-category {
+    cursor: pointer;
+    padding:0.2em;
+
+}
+
+
+.restaurant-category:hover {
+    /*background-color: #DDEEEE;*/
+    background-color: #2f2f2f;
+    color:white;
+    opacity:0.85;
+}
+
+
+
+.restaurant-category-name
+{
+    font-size:28px;
+}
+
+.category-articles{
+    padding:2em;
+}
+
+.checkbox-teal [type="checkbox"]:checked+label:before {
+    border-color: transparent #009688 #009688 transparent;
+}
+
+.category-article{
+    position:relative;
+    min-height:2em;
+    padding:1em;
+    margin-bottom:0.1em;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+
+.category-article:hover{
+    background-color: #F39C12;
+    color:white;
+}
+
+
+.article-chosen
+{
+    background-color: #F39C12;
+    color:white;
+}
+
+
+
+.quantity-container{
+    font-size:2em;
+    /*color:white;*/
+    display:inline-block;
+    position:absolute;
+    right:0;
+    bottom:0;
+}
+
+
+
+.article-quantity{
+
+}
+
+
+.button-quantity{
+    padding-left:0.3em;
+    padding-right: 0.3em;
+    cursor:pointer;
+}
+
+.button-quantity:hover{
+    color:white;
+}
+
+
+
+.category-article .quantity-container
+{
+    display:none;
+}
+
+.article-chosen .quantity-container
+{
+    display:block;
+}
+
+.button
+{
+    color:white !important;
+}
+
+
+.checkout-floating-data
+{
+    position:fixed;
+    bottom:0;
+    background-color: #ecf0f1;
+    min-height:13%;
+    width:100%;
+    padding-bottom:0.3em;
+}
+
+.inline-bl
+{
+    display:inline-block;
+}
+
+.order-sum
+{
+    font-size:1.5em;
+    text-align: right;
+    width:47%;
+    margin-right:5%;
+}
+
+.upper-container-expander
+{
+    text-align: center;
+    border-bottom: 2px solid white;
+}
+
+
+.upper-container-expander-arrow
+{
+    line-height: 0.7em;
+    display:inline-block;
+    text-align: center;
+    font-size:2em;
+    margin-left:auto;
+    margin-right:auto;
+    text-orientation: upright;
+}
+
+.upper-arrow:before
+{
+    content: "\0FE3F";
+}
+
+.upper-arrow
+{
+
+}
+
+.lower-arrow:before
+{
+    content: "\0FE40";
+}
+
+.lower-arrow
+{
+
+}
+
+.overlayContainer{
+    position:relative;
+
+}
+
+
+.overlay {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    text-align:center;
+}
+
+
+.relative-bottom
+{
+    position:relative;
+    bottom:0;
+}
+
+.vert-top
+{
+    vertical-align: top;
+}
+
+.upper-container
+{
+    border-bottom: 2px solid white;
+    padding: 0.4em;
+    /*min-height:20vh;*/
+    max-height:33vh;
+    overflow-y: scroll;
+}
+
+.order-summary
+{
+    width:64%;
+
+    padding: 0.4em 0.2em;
+}
+
+.order-proposition
+{
+width:33%;
+    border-left: 1px solid white;
+}
+
+
+.item-cost-summary::after
+{
+    /*string-set:  header content(before) ':' content(text);*/
+    content: leader('.') attr(data-price);
+}
+
+
+.article-item
+{
+    white-space:nowrap;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dots {
+    /*background-color: green;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    letter-spacing:5px;
+}
+
+.dots:after {
+    content:"  ..........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................."
+    /*content: " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ."*/
+}
+
+.article-price {
+    /*background-color: red;*/
+    flex-shrink: 0;
+}
+
+
+.article-item-summary
+{
+    white-space:nowrap;
+    display: flex;
+    justify-content: space-between;
+    margin: 0.4em 1em;
+}
+
+.article-price-summary {
+    /*background-color: red;*/
+    flex-shrink: 0;
+}
+
+.bolded
+{
+    font-weight: bold;
+}

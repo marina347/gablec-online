@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout" th:with="title='Hello, template'">
+<head>
+    <title th:text="'My lunch wallet'"></title>
+    <script type="text/javascript" th:src="@{/js/user-wallet-transaction.js}"></script>
+</head>
+
+<th:block layout:fragment="heading">
+    <h3 class="display-4">Lunch Wallet</h3>
+</th:block>
+<th:block layout:fragment="content">
+    <div>
+        <span>My lunch wallet amount: </span>
+        <span th:text="${#numbers.formatDecimal(currentUser.lunchWallet, 0, 'COMMA', 2, 'COMMA')}+' HRK'"></span> <br/> <br/>
+    <span>Choose user</span> <br/>
+        <div th:id="${currentUser.id}">
+    <select th:id="myselect">
+        <option th:each="user : ${users}"
+                th:value="${user.id}"
+                th:text="${user.surname}+' '+${user.name}"/>
+    </select> <br/>
+            <input/>
+        <button class="btn btn-warning" th:id="mybutton" th:text="'Borrow money'"></button>
+        </div>
+    <hr/>
+        <h4>Borrowed money</h4> <br/>
+        <ul>
+            <div style="margin-left:2em; font-size:16px;"  th:each="fromUserMe, itrStat: ${fromMe}">
+                <li>
+
+                <span th:text="${fromUserMe.userTo.name}"></span>
+                <span th:text="${fromUserMe.userTo.surname}"></span>
+                <span style="font-weight:700; " th:text="' - ' +${fromUserMe.amount}+' HRK'" th:name="wallet"></span>
+                <span  th:text="' ('+${fromUserMe.date}+')'" th:name="wallet"></span>
+
+                </li>
+            </div>
+        </ul>
+        <hr/>
+        <h4>My debts</h4>
+
+        <ul>
+            <div style="margin-left:2em; margin-top:1em; font-size:16px;"  th:each="fromOther, itrStat: ${toMe}">
+                <li th:id="${fromOther.id}" >
+                    <span th:text="${fromOther.userFrom.name}"></span>
+                    <span th:text="${fromOther.userFrom.surname}"></span>
+                    <span th:id="returnAmount" style="font-weight:700; " th:text="' - ' +${fromOther.amount}+' HRK'" th:name="wallet"></span>
+                    <span th:text="' ('+${fromOther.date}+')'"   th:name="wallet"></span>
+                    <button style="margin-left:1em; font-size:14px" class="forReturn btn btn-warning" th:id="returnButton" th:text="'Return money'"></button>
+                </li>
+            </div>
+        </ul>
+    </div>
+</th:block>
+</html>

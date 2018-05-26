@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout" th:with="title='Hello, template'">
+<head>
+    <title th:text="'Edit restaurant'"></title>
+</head>
+
+<th:block layout:fragment="content">
+    <div id="edit-restaurant-container" align="center">
+        <h1>Edit Restaurant</h1>
+        <form id="edit-restaurant-form" th:action="@{/admin/edit-restaurant}" method="post" modelAttribute="restaurant">
+            <input hidden="hidden" name="id" th:value="${restaurant.id}"/>
+            <table id="edit-restaurant-table" >
+
+                <tr>
+                    <td ><input style="text-align: center" placeholder="name" path="name" type="text" name="name" th:value="${restaurant.name}" th:disabled="true" /></td>
+                </tr>
+                <tr>
+                    <td ><input style="text-align: center" placeholder="address"  path="address" type="text"  name="address" th:value="${restaurant.address}" th:disabled="true" /></td>
+                </tr>
+                <tr>
+                    <td ><input style="text-align: center" placeholder="phone"  path="phone" type="text"  name="phone" th:value="${restaurant.phoneList.get(0).number}" th:disabled="true" /></td>
+                </tr>
+                <tr>
+                    <td ><input style="text-align: center" placeholder="order time" path="orderTime" type="text"  name="orderTime" th:value="${restaurant.orderTime}" /></td>
+                </tr>
+
+            </table> <br/>
+            <input style="background-color: #F39C12;" class="log-reg-btn btn btn-warning" type="submit" value="Save"/>
+        </form>
+    </div>
+</th:block>
+</html>
