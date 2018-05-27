@@ -29,4 +29,4 @@ Integration of services:
 -> SMS messages  
 
 
-I have prepared video that demonstrates usage of application - https://youtu.be/2S65aB9gWAg
+I have prepared video that demonstrates usage of application - https://www.youtube.com/watch?v=2S65aB9gWAg
