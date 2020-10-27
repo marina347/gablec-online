@@ -2,6 +2,7 @@
 $(document).ready(function() {
 
     $('[id^=detail-]').hide();
+
     $('.toggle').click(function() {
 
         $input = $( this );
@@ -18,12 +19,17 @@ $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip()
 
     });
+
+    //ako kategorija nema artikala, nemoj prikazat kategoriju :)
+    //each je metoda koja iterira kroz sve elemente koji imaju klasu category-articles
     $(".category-articles").each(function () {
         if ( $(this).children().length == 0 ) {
             $(this).parent().remove();
         }
     })
 
+    //ako se klikne na artikl, pridruzuje (ili mice) mu se klasa article-chosen
+    //ovisno o tome se dodaje u kosaricu ili izbacuje iz kosarice
     $(".category-article").click(function() {
 
         $input = $(this);
@@ -38,6 +44,9 @@ $(document).ready(function() {
         }
         $('[data-toggle="tooltip"]').tooltip()
     });
+
+
+    //kad se klikne plus ili minus smanjimo kolicinu artikla pa kasnije updejtamo summary
 
     $(".button-quantity").click(function(e)
     {
@@ -79,6 +88,8 @@ $(document).ready(function() {
 
 });
 
+//dodemo do papice, ako je kliknut minus dekrementiramo
+//ako je plus inkrementiramo
 function quantityClick($input)
 {
     var val = 0;
@@ -161,6 +172,8 @@ function getTotalFormated()
     return  calculateTotal().toFixed(2).toString().replace(".",",");
 }
 
+
+//ove bas vracaju html
 function getSummaryContentTemplate(articleName, count, price, currency, restaurantName)
 {
     return `
@@ -193,6 +206,8 @@ function handleValueChange(parentNode)
         restaurantName));
 }
 
+//dodaje odabrani artikl u kosaricu, tj summary
+//poziva putItemToCartApi
 function addArticleToSummary(input, doApi = true)
 {
     $("#sum_value").html(getTotalFormated());
@@ -209,7 +224,8 @@ function addArticleToSummary(input, doApi = true)
     if(doApi)
         putItemToCartApi(foodId,count);
 }
-
+//mice iz summary content
+//poziva removeItemFromCart
 function removeArticleFromSummary(input, doApi = true) {
     $("#sum_value").html(getTotalFormated());
     $("#summary-content").find("#summary_"+$input.attr("id")).remove();
@@ -219,6 +235,8 @@ function removeArticleFromSummary(input, doApi = true) {
 }
 
 
+
+//ispod su ajax pozivi
 function checkout()
 {                 window.location.href = "/app1/checkout";
 /*

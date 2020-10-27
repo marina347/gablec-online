@@ -1,5 +1,9 @@
 package first.app.app1.controllers;
 
+import cognitivej.vision.face.scenario.FaceScenarios;
+import cognitivej.vision.overlay.CognitiveJColourPalette;
+import cognitivej.vision.overlay.RectangleType;
+import cognitivej.vision.overlay.builder.ImageOverlayBuilder;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.Expose;
@@ -22,6 +26,8 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.lang.System.getProperty;
 
 @Controller
 public class RestaurantController {
@@ -65,6 +71,16 @@ public class RestaurantController {
     @Autowired
     UserOrderService userOrderService;
 
+    String IMAGE_URL="https://i.kinja-img.com/gawker-media/image/upload/s--_DBGLHVf--/c_scale,f_auto,fl_progressive,q_80,w_800/eibgv7kctah62iddzywm.jpg";
+
+    public String getIMAGE_URL() {
+        return IMAGE_URL;
+    }
+
+    public void setIMAGE_URL(String IMAGE_URL) {
+        this.IMAGE_URL = IMAGE_URL;
+    }
+
     private List<Food>  getPropositions(User user)
     {
         DiscoveryManager discoveryManager = new DiscoveryManager(environmentId,collectionId,username,password);
@@ -88,6 +104,13 @@ public class RestaurantController {
     public String showRestaurants(Model model)
     {
 
+
+        FaceScenarios faceScenarios = new FaceScenarios(getProperty("c638e2cf31e04c3e91e8f9fe21ccba3d"),
+                getProperty("48fe1fe442c742719f3c11a3463ab2cd"));
+        ImageOverlayBuilder imageOverlayBuilder = ImageOverlayBuilder.builder(IMAGE_URL);
+        imageOverlayBuilder.outlineFacesOnImage(faceScenarios.findFaces(IMAGE_URL), RectangleType.FULL,
+                CognitiveJColourPalette.STRAWBERRY).launchViewer();
+
         List<Restaurant> restaurants =restaurantPopularity.getRestaurants();
         String username= UserSessionUtils.getUserUsername();
         User user=userService.findByUsername(username);
@@ -96,10 +119,10 @@ public class RestaurantController {
         int day = calendar.get(Calendar.DAY_OF_WEEK);
         DailyMenu currentDay=dailyMenuService.getCurrentDay(day-1);
 
-        List<Food> propositions = getPropositions(user);
+        //List<Food> propositions = getPropositions(user);
 
 
-        model.addAttribute("propositions", propositions);
+        //model.addAttribute("propositions", propositions);
         model.addAttribute("currentDay", currentDay);
         model.addAttribute("restaurants", restaurants);
         model.addAttribute("categories", categories);

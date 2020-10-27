@@ -29,12 +29,6 @@ public class RestaurantService {
     public Restaurant getRestaurantById(int id){
         return  restaurantDao.findById( id);
     }
-    public List<Phone> getRestaurantPhones(Restaurant restaurant){
-        return phoneDao.getByRestaurant(restaurant);
-    }
-    public List<Food> getRestaurantFood(Restaurant restaurant){
-        return foodDao.getByRestaurant(restaurant);
-    }
     public void saveRestaurant(Restaurant res){
         restaurantDao.save(res);
     }

@@ -16,4 +16,5 @@ public interface FoodDao extends JpaRepository<Food, Integer> {
     Food findById(int id);
     List<Food> findByIdIn(int[] foodIds);
 
+
 }

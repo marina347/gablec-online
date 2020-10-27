@@ -12,6 +12,8 @@ import first.app.app1.service.UserService;
 import first.app.app1.service.UserWalletTransactionService;
 import first.app.app1.utils.UserSessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,11 +37,11 @@ public class UserWalletTransactionRestController {
 
 
     @PostMapping("/request")
-    public boolean walletRequestApprove(@RequestBody UserWalletTransactionRequest request) {
+    public Boolean walletRequestApprove(@RequestBody UserWalletTransactionRequest request) {
         try{
             User userFrom=userService.findByUserId(request.getUserFrom());
             User userTo=userService.findByUserId(request.getUserTo());
-            if(userFrom.getLunchWallet()<request.getAmount()) return false;
+            if(userFrom.getLunchWallet()<request.getAmount())  return Boolean.FALSE;
             userFrom.setLunchWallet((userFrom.getLunchWallet())-request.getAmount());
             userTo.setLunchWallet(userTo.getLunchWallet()+request.getAmount());
             UserWalletTransaction userWalletTransaction=new UserWalletTransaction();
@@ -59,11 +61,11 @@ public class UserWalletTransactionRestController {
             notificationDetails.setIcon("img/bag_of_money.jpg");
 
 
-            notificationService.pushMessage(userTo.getUsername(),notificationDetails);
-            return true;
+           // notificationService.pushMessage(userTo.getUsername(),notificationDetails);
+            return Boolean.TRUE;
         }
         catch (Exception e){
-            return false;
+            return Boolean.FALSE;
         }
     }
     @PostMapping("/return-request")

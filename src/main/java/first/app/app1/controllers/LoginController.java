@@ -49,7 +49,7 @@ public class LoginController {
         return "login";
     }
 
-    @PostMapping("/login-error")
+    @GetMapping("/login-error")
     public String showLoginError(Model model){
         String message="Unsuccessful login! Try with different username or password!";
         model.addAttribute("message",message);

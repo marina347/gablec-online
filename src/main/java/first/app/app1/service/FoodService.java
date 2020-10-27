@@ -13,10 +13,6 @@ public class FoodService {
     @Autowired
     private FoodDao foodDao;
 
-    public Category getFoodCategoryById(int id){
-        return foodDao.getCategoryById(id);
-    }
-
     public List<Food> findByIdIn(int[] foodIds){
         return foodDao.findByIdIn(foodIds);
     }

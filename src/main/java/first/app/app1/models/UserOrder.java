@@ -24,6 +24,7 @@ public class UserOrder {
     private User user;
 
     public UserOrder() {
+        this.orderItemList = new ArrayList<>();
     }
 
     public UserOrder(User user, Cart cart) {

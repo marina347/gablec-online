@@ -29,6 +29,7 @@ public class UserOrderService {
     {
         return orderDao.findOne(id);
     }
+    /*
     public void saveOrder(UserOrder order){
         orderDao.save(order);
     }
@@ -57,10 +58,9 @@ public class UserOrderService {
 
         return ordersByRestaurants.values();
     }
+    */
 
-    public void completeOrder(int orderId){
-        //orderDao.updateOrderState(orderId);
-    }
+
     public List<UserOrder> getUserOrdersByUser(User user){
         return orderDao.getUserOrdersByUser(user);
     }

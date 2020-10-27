@@ -17,6 +17,7 @@
 <th:block layout:fragment="content">
     <div th:each="restaurantOrder, itrStat:${ordersByRestaurant}">
         <h2 th:text="${restaurantOrder.restaurant.name}"></h2>
+
         <p></p>
         <div style="margin-left:2em; margin-top:1em;" class="restaurant-order-details-container">
             <div th:each="article, itrStat: ${restaurantOrder.foodList}">
